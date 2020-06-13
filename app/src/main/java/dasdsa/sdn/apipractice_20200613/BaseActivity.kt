@@ -2,7 +2,7 @@ package dasdsa.sdn.apipractice_20200613
 
 import androidx.appcompat.app.AppCompatActivity
 
-class BaseActivity : AppCompatActivity() {
+abstract class BaseActivity : AppCompatActivity() {
 
     val mContext = this
 
