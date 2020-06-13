@@ -9,6 +9,7 @@ import android.widget.Toast
 import dasdsa.sdn.apipractice_20200613.utils.ServerUtil
 import kotlinx.android.synthetic.main.activity_sing_up.*
 import org.json.JSONObject
+import kotlin.math.sin
 
 class SingUpActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,6 +20,11 @@ class SingUpActivity : BaseActivity() {
     }
 
     override fun setupEvents() {
+
+        singUpBtn.setOnClickListener {
+
+        }
+
 
         emailEdt.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
