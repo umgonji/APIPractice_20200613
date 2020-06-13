@@ -44,6 +44,7 @@ class LoginActivity : BaseActivity() {
                         //로그인 성공 => 로그인 한 사람의 이메일을 그대로 토스트로 출력
                         
                         val myIntent  = Intent(mContext, MainActivity::class.java)
+
                         startActivity(myIntent)
 /*
                         //로그인 성공 => 로그인 한 사람의 이메일을 그대로 토스트로 출력
