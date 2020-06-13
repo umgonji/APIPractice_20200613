@@ -2,7 +2,9 @@ package dasdsa.sdn.apipractice_20200613
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import dasdsa.sdn.apipractice_20200613.utils.ServerUtil
 import kotlinx.android.synthetic.main.activity_sing_up.*
+import org.json.JSONObject
 
 class SingUpActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,6 +19,11 @@ class SingUpActivity : BaseActivity() {
             //입력한 이메일이 이미 회원으로 있는지 확인 => 서버에 요청
             val inputEmail = emailEdt.text.toString()
 
+            ServerUtil.getRequestDuplicatedCheck(mContext, "EMAIL", inputEmail, object : ServerUtil.JsonResponseHandler {
+                override fun onResponse(json: JSONObject) {
+
+                }
+            })
 
 
         }
