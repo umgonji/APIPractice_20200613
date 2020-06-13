@@ -18,6 +18,7 @@ class ServerUtil {
         //어느 서버로 가야하는지 (HOST 주소) 적어도는 변수
         val BASE_URL = "http://15.165.177.142"
 
+
         fun getRequestDuplicatedCheck(context: Context, checkType: String, inputVal: String, handler: JsonResponseHandler?) {
 
             val client = OkHttpClient()
@@ -94,6 +95,36 @@ class ServerUtil {
                     val json = JSONObject(bodyString)
                     Log.d("JSON응답", json.toString())
                     //화면 (액티비티)에 만ㄷ르어낸 json 변수를 전달
+                    handler?.onResponse(json)
+                }
+            })
+        }
+
+        fun putRequestSingUp(context: Context, email:String, pw:String, nick:String, handler: JsonResponseHandler?) {
+
+            val client = OkHttpClient()
+
+            val urlString = "${BASE_URL}/user"
+
+            val formData = FormBody.Builder()
+                .add("email", email)
+                .add("password", pw)
+                .add("nick_name", nick)
+                .build()
+
+            val request = Request.Builder()
+                .url(urlString)
+                .put(formData)
+//                .head()   //API가 헤더를 요구하면 여기서 첨부하면 된다.
+                .build()
+
+            client.newCall(request).enqueue(object : Callback {
+                override fun onFailure(call: Call, e: IOException) {
+                }
+                override fun onResponse(call: Call, response: Response) {
+                    val bodyString = response.body!!.string()
+                    val json = JSONObject(bodyString)
+                    Log.d("JSON응답", json.toString())
                     handler?.onResponse(json)
                 }
             })
