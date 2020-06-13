@@ -1,6 +1,7 @@
 package dasdsa.sdn.apipractice_20200613.utils
 
 import android.content.Context
+import android.util.Log
 import okhttp3.*
 import org.json.JSONObject
 import java.io.IOException
@@ -46,22 +47,17 @@ class ServerUtil {
                 override fun onFailure(call: Call, e: IOException) {
                     //서버에 연결 자체를 실패했을 경우
                 }
-
                 override fun onResponse(call: Call, response: Response) {
                     //서버에서 응답을 잘 받아왔을 경우
                     //응답 중에서 body(내용물) 을 string으로 저장
                     val bodyString = response.body!!.string()
-
                     //저장한 String을 JSONObject 양식으로 가공
                     //서버의 응답이 JSON 형태이기 때문.
                     val json = JSONObject(bodyString)
-
+                    Log.d("JSON응답", json.toString())
                     //화면 (액티비티)에 만ㄷ르어낸 json 변수를 전달
                     handler?.onResponse(json)
-
                 }
-
-
             })
         }
 
