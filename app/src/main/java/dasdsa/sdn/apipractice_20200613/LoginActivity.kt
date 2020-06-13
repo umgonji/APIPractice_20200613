@@ -42,6 +42,11 @@ class LoginActivity : BaseActivity() {
                     if(codeNum == 200) {
 
                         //로그인 성공 => 로그인 한 사람의 이메일을 그대로 토스트로 출력
+                        
+                        val myIntent  = Intent(mContext, MainActivity::class.java)
+                        startActivity(myIntent)
+/*
+                        //로그인 성공 => 로그인 한 사람의 이메일을 그대로 토스트로 출력
                         val data = json.getJSONObject("data")
                         val user = data.getJSONObject("user")
                         val loginUserEmail = user.getString("email")
@@ -51,7 +56,7 @@ class LoginActivity : BaseActivity() {
                             Toast.makeText(mContext, "${loginUserEmail}님 환영합니다.", Toast.LENGTH_SHORT).show()
                         }
 
-
+*/
 
                        /*
                         //로그인 성공
