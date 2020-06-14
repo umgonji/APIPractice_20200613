@@ -32,7 +32,7 @@ class ViewTopicDetailActivity : BaseActivity() {
                 override fun onResponse(json: JSONObject) {
 
                     val code = json.getInt("code")
-                    if(code ==200){
+                    if(code == 200){
                         runOnUiThread{
                             Toast.makeText(mContext, "참여해주셔서 감사합니다.", Toast.LENGTH_SHORT).show()
                         }
@@ -58,7 +58,7 @@ class ViewTopicDetailActivity : BaseActivity() {
             ServerUtil.postRequestVote(mContext, mTopic.sides[1].id, object : ServerUtil.JsonResponseHandler{
                 override fun onResponse(json: JSONObject) {
                     val code = json.getInt("code")
-                    if(code ==200){
+                    if(code == 200){
                         runOnUiThread{
                             Toast.makeText(mContext, "참여해주셔서 감사합니다.", Toast.LENGTH_SHORT).show()
                         }
