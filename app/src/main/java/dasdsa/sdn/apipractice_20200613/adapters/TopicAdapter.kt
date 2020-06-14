@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.ImageView
+import android.widget.TextView
 import dasdsa.sdn.apipractice_20200613.R
 import dasdsa.sdn.apipractice_20200613.datas.Topic
 
@@ -23,6 +25,14 @@ class TopicAdapter(
         }
 
         val row = tempRow!!
+
+        val topicImg = row.findViewById<ImageView>(R.id.topicImg)
+        val topicTitleTxt = row.findViewById<TextView>(R.id.topicTitleTxt)
+
+        val data = mList[position]
+
+        topicTitleTxt.text = data.title
+
 
         return row
     }
