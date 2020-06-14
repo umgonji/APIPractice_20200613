@@ -27,4 +27,5 @@ class ReplyAdapter(
 
         return row
     }
+
 }
