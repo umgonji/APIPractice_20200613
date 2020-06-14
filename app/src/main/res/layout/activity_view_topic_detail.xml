@@ -42,6 +42,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:gravity="center"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -67,13 +68,20 @@
                         android:layout_marginTop="5dp" />
 
                     <Button
-                        android:id="@+id/firstSideBtn"
+                        android:id="@+id/voteToFirstBtn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="투표하기" />
+                        android:text="투표 하기" />
 
                 </LinearLayout>
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:text="Vs."
+                    android:textSize="18sp"
+                    android:layout_marginLeft="20dp" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -98,10 +106,10 @@
                         android:textSize="20sp"
                         android:textColor="@color/white" />
                     <Button
-                        android:id="@+id/secondSideBtn"
+                        android:id="@+id/voteToSecondBtn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="투표하기" />
+                        android:text="투표 하기" />
 
                 </LinearLayout>
 
