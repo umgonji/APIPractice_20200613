@@ -29,6 +29,15 @@ class MainActivity : BaseActivity() {
 
     override fun setupEvents() {
 
+        topicListView.setOnItemClickListener { parent, view, position, id ->
+            val clickedTopic = topicList[position]
+
+            val myIntent = Intent(mContext, ViewTopicDetailActivity::class.java)
+            myIntent.putExtra("topic_id", clickedTopic.id)
+            startActivity(myIntent)
+
+        }
+
         logoutBtn.setOnClickListener {
             //정말 로그아웃 할건지? 확인받자
             val alert = AlertDialog.Builder(mContext)
@@ -88,7 +97,7 @@ class MainActivity : BaseActivity() {
                     val topics = data.getJSONArray("topics")
 
                     //JSON Object 들을 차례대로 추출 반복문
-                    for ( i in 0..topics.length()-1) {
+                    for ( i in 0..topics.length()-1 ) {
                         //topics 배열안에서 {} 를 순서대로 (i) JSONObject로 추출
                         val topicJson = topics.getJSONObject(i)
 
