@@ -22,7 +22,13 @@ class MainActivity : BaseActivity() {
         //서버에서 내 정보를 받아와서 화면에 출력
         ServerUtil.getRequestMyInfo(mContext, object  : ServerUtil.JsonResponseHandler {
             override fun onResponse(json: JSONObject) {
+                val data = json.getJSONObject("data")
+                val user = data.getJSONObject("user")
+                val nickName = user.getString("nick_name")
 
+                runOnUiThread {
+                    loginUserNickNameTxt.text = "${nickName}님 환영합니다."
+                }
             }
         })
     }
