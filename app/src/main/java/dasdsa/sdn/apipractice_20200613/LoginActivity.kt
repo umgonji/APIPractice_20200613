@@ -43,6 +43,7 @@ class LoginActivity : BaseActivity() {
 
                         //서버에서 내려주는 토큰값을 SharedPrefence에 저장
 
+
                         //로그인 성공 => 메일엑티비티로 이동
                         val myIntent  = Intent(mContext, MainActivity::class.java)
                         startActivity(myIntent)
