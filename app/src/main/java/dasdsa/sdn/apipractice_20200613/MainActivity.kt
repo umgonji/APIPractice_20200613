@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import dasdsa.sdn.apipractice_20200613.adapters.TopicAdapter
 import dasdsa.sdn.apipractice_20200613.datas.Topic
 import dasdsa.sdn.apipractice_20200613.utils.ContextUtil
 import dasdsa.sdn.apipractice_20200613.utils.ServerUtil
@@ -16,6 +17,8 @@ import org.json.JSONObject
 class MainActivity : BaseActivity() {
 
     val topicList = ArrayList<Topic>()
+
+    lateinit var topicAdapter : TopicAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,6 +55,9 @@ class MainActivity : BaseActivity() {
         //서버에서 토론 주제 목록을 받아와서 리스트뷰의 ArrayList 에 채워주기.
 
         getTopicListFromserver()
+
+        topicAdapter = TopicAdapter(mContext, R.layout.topic_list_item, topicList)
+        topicListView.adapter = topicAdapter
 
         /*
         //서버에서 내 정보를 받아와서 화면에 출력
@@ -92,6 +98,9 @@ class MainActivity : BaseActivity() {
                         //topicList에 완성된 주제를 추가
                         topicList.add(topic)
                     }
+
+                    //내용물이 추가되었으니 어댑터에게 새로 고침
+                    topicAdapter.notifyDataSetChanged()
                 }
 
             }
