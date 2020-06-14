@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import dasdsa.sdn.apipractice_20200613.utils.ContextUtil
 import dasdsa.sdn.apipractice_20200613.utils.ServerUtil
 import kotlinx.android.synthetic.main.activity_login.*
 import org.json.JSONObject
@@ -41,7 +42,11 @@ class LoginActivity : BaseActivity() {
 
                     if(codeNum == 200) {
 
-                        //서버에서 내려주는 토큰값을 SharedPrefence에 저장
+                        //서버에서 내려주는 토큰값을 SharedPrefence 에 저장
+                        val data = json.getJSONObject("data")   //getJSONObject 이건 중괄호 안에 있는거 접근할때 쓰는것
+                        val token = data.getString("token")
+
+                        ContextUtil.setUserToken(mContext, token)
 
 
                         //로그인 성공 => 메일엑티비티로 이동
