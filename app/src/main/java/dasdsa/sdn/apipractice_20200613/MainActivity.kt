@@ -7,12 +7,16 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import dasdsa.sdn.apipractice_20200613.datas.Topic
 import dasdsa.sdn.apipractice_20200613.utils.ContextUtil
 import dasdsa.sdn.apipractice_20200613.utils.ServerUtil
 import kotlinx.android.synthetic.main.activity_main.*
 import org.json.JSONObject
 
 class MainActivity : BaseActivity() {
+
+    val topicList = ArrayList<Topic>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -45,6 +49,11 @@ class MainActivity : BaseActivity() {
     }
 
     override fun setValues() {
+        //서버에서 토론 주제 목록을 받아와서 리스트뷰의 ArrayList 에 채워주기.
+
+        getTopicListFromserver()
+
+        /*
         //서버에서 내 정보를 받아와서 화면에 출력
         ServerUtil.getRequestMyInfo(mContext, object  : ServerUtil.JsonResponseHandler {
             override fun onResponse(json: JSONObject) {
@@ -57,7 +66,17 @@ class MainActivity : BaseActivity() {
                 }
             }
         })
+        */
     }
 
 
+    fun getTopicListFromserver() {
+        ServerUtil.getRequestV2MainInfo(mContext, object : ServerUtil.JsonResponseHandler{
+            override fun onResponse(json: JSONObject) {
+
+            }
+
+
+        })
+    }
 }
