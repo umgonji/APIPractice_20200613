@@ -63,6 +63,8 @@ class ViewTopicDetailActivity : BaseActivity() {
                         //선택 진영 정보도 출력
                         firstSideTxt.text = mTopic.sides[0].title
                         secondSideTxt.text = mTopic.sides[1].title
+
+                        //firstSideVoteCountTxt.text =
                     }
 
                 }
