@@ -26,6 +26,24 @@ class ViewTopicDetailActivity : BaseActivity() {
     }
 
     override fun setupEvents() {
+        firstSideBtn.setOnClickListener {
+            ServerUtil.postRequestTopicVote(mContext, mTopic.sides[0].id, object : ServerUtil.JsonResponseHandler{
+                override fun onResponse(json: JSONObject) {
+                    val code = json.getInt("code")
+
+                    if(code == 200 ){
+
+                        Toast.makeText(mContext, "투표했어", Toast.LENGTH_SHORT).show()
+                    }
+                    else {
+
+
+                    }
+
+                }
+
+            })
+        }
 
     }
 
@@ -64,7 +82,9 @@ class ViewTopicDetailActivity : BaseActivity() {
                         firstSideTxt.text = mTopic.sides[0].title
                         secondSideTxt.text = mTopic.sides[1].title
 
-                        //firstSideVoteCountTxt.text =
+                        //투표 현황도 파싱된 거 써서 보여줌
+                        firstSideVoteCountTxt.text = "${mTopic.sides[0].voteCount.toString()}표"
+                        secondSideVoteCountTxt.text = "${mTopic.sides[1].voteCount.toString()}표"
                     }
 
                 }
