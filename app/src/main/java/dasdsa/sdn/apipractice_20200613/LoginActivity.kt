@@ -48,7 +48,6 @@ class LoginActivity : BaseActivity() {
 
                         ContextUtil.setUserToken(mContext, token)
 
-
                         //로그인 성공 => 메일엑티비티로 이동
                         val myIntent  = Intent(mContext, MainActivity::class.java)
                         startActivity(myIntent)

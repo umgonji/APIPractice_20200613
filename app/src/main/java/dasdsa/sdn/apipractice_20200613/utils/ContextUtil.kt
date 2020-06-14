@@ -5,11 +5,23 @@ import android.content.Context
 class ContextUtil {
 
     companion object {
-        //메모장의 파일 이름에 대응되는 개념으로 만든 변수
-        val prefName = "APIPracticePreference"  //이름은 플젝마다 바꾸면 된다.
+        //메모장의 파일 이름에 대응되는 개념으로 만든 변수 //private 붙이는건 다른 화면에서는 참조로 뜨지 않게 하려고. 여기서만 쓰려고 붙이는것임.
+        private val prefName = "APIPracticePreference"  //이름은 플젝마다 바꾸면 된다.
 
         //저장될 데이터 항목 이름들을 변수로 설정
-        val USER_TOKEN = "USER_TOKEN"   //토큰 저장
+        private val USER_TOKEN = "USER_TOKEN"   //토큰 저장
+        private val AUTO_LOGIN = "AUTO_LOGIN"
+
+        //자동로그인 getter / setter
+        fun setAutoLogin(context: Context, autoLogin:Boolean) {
+            val pref = context.getSharedPreferences(prefName, Context.MODE_PRIVATE)
+            pref.edit().putBoolean(AUTO_LOGIN, autoLogin).apply()
+        }
+
+        fun isAutoLogin(context: Context) : Boolean { //boolean 은 함수명을 보통 is~로만든다.
+            val pref = context.getSharedPreferences(prefName, Context.MODE_PRIVATE)
+            return  pref.getBoolean(AUTO_LOGIN, false)
+        }
 
         //토큰 저장 기능
         fun setUserToken(context: Context, token:String) {
