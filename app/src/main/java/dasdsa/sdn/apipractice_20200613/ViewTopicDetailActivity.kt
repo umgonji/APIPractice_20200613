@@ -35,9 +35,19 @@ class ViewTopicDetailActivity : BaseActivity() {
         //의견 등록하기 버튼
         replyBtn.setOnClickListener {
 
-            val myIntent = Intent(mContext, EditReplyActivity::class.java)
-            myIntent.putExtra("topicTitle", mTopic.title)
-            startActivity(myIntent)
+            mTopic.mySelectedSide?.let { //it:TopicSide 가 원래 찍혀있는거다. 그래서 아래서 it 씀
+                val myIntent = Intent(mContext, EditReplyActivity::class.java)
+                myIntent.putExtra("topicTitle", mTopic.title)
+                myIntent.putExtra("selectedSideTitle", it.title)
+                startActivity(myIntent)
+            }.let {
+                if(it == null) {
+                    //mySelectedSide 가 null인 경우 => 투표를 아직 안한경우
+                    Toast.makeText(mContext, "맘에 드는 진영을 선택해야 의견을 남길 수 있습니다.", Toast.LENGTH_SHORT).show()
+                }
+
+            }
+
         }
 
         voteToFirstBtn.setOnClickListener {
