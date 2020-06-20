@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import com.bumptech.glide.Glide
+import dasdsa.sdn.apipractice_20200613.adapters.ReplyAdapter
 import dasdsa.sdn.apipractice_20200613.datas.Topic
 import dasdsa.sdn.apipractice_20200613.utils.ServerUtil
 import kotlinx.android.synthetic.main.activity_view_topic_detail.*
@@ -17,6 +18,9 @@ class ViewTopicDetailActivity : BaseActivity() {
     var mTopicId = -1
     //서버에서 받아온 주제 정보를 저장할 변수
     lateinit var mTopic : Topic
+
+    lateinit var mReplyAdapter : ReplyAdapter
+    
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -125,6 +129,10 @@ class ViewTopicDetailActivity : BaseActivity() {
                         //투표 현황도 파싱된 거 써서 보여줌
                         firstSideVoteCountTxt.text = "${mTopic.sides[0].voteCount.toString()}표"
                         secondSideVoteCountTxt.text = "${mTopic.sides[1].voteCount.toString()}표"
+                        
+                        //의견 목록을 뿌려줄 어댑터 생성 / 연결
+                        mReplyAdapter = ReplyAdapter(mContext, R.layout.topic_reply_list_item, mTopic.replies)
+                        replyListView.adapter = mReplyAdapter
                     }
 
                 }
