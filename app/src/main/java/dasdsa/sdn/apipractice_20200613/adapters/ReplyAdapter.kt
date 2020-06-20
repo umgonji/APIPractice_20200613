@@ -50,6 +50,40 @@ class ReplyAdapter(
         likeBtn.text = "좋아요 : ${data.likeCount}"
         dislikeBtn.text = "싫어요 : ${data.dislikeCount}"
 
+        //내 좋아요 / 싫어요 여부 표시
+        if(data.isMyLike) {
+            //내가 좋아요를 찍은 댓글일 경우
+            //좋아요 빨간색 / 싫어요 회색
+            likeBtn.setBackgroundResource(R.drawable.red_border_box)
+            //좋아요 글씨 색 : 빨간색 => colors => red를 사용
+            dislikeBtn.setBackgroundResource(R.drawable.gray_border_box)
+
+            // mContext.resources -> res 폴더에 접근해주는 소스
+            // 어뎁터에는 리소스 접근 기능없음.(엑티비티에나 있다.)
+            // 그런건 화면에 있다. 그래서 화면을 통해서 리소스를 접근하는거다. 그래서 mContext 를 통해서 리소스에 접근한다.
+            //버튼 글씨색
+            likeBtn.setTextColor(mContext.resources.getColor(R.color.red))
+            dislikeBtn.setTextColor(mContext.resources.getColor(R.color.darkGray))
+        }
+        else if(data.isMyDislike) {
+            //내가 싫어요를 찍은 댓글일 경우
+            //좋아요 회색 / 싫어요 파란색
+            likeBtn.setBackgroundResource(R.drawable.gray_border_box)
+            dislikeBtn.setBackgroundResource(R.drawable.blue_border_box)
+
+            //버튼 글씨색
+            likeBtn.setTextColor(mContext.resources.getColor(R.color.darkGray))
+            dislikeBtn.setTextColor(mContext.resources.getColor(R.color.blue))
+
+        }
+        else {
+            likeBtn.setBackgroundResource(R.drawable.gray_border_box)
+            dislikeBtn.setBackgroundResource(R.drawable.gray_border_box)
+            //버튼 글씨색
+            likeBtn.setTextColor(mContext.resources.getColor(R.color.darkGray))
+            dislikeBtn.setTextColor(mContext.resources.getColor(R.color.darkGray))
+        }
+
         //좋아요 / 싫어요 이벤트 처리
         likeBtn.setOnClickListener {
             //좋아요 API 호출 => 좋아요 누르기 / 취소 처리
