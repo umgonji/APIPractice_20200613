@@ -28,6 +28,9 @@ class ReplyAdapter(
 
         //xml에서 사용할 뷰 가져오기
         val writerNickNameTxt = row.findViewById<TextView>(R.id.writerNickNameTxt)
+
+
+
         val contentTxt = row.findViewById<TextView>(R.id.contentTxt)
 
         //목록에서 뿌려줄 데이터 꺼내오기
