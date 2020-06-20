@@ -34,6 +34,7 @@ class ReplyAdapter(
         val data = mList[position]
 
         //데이터 / 뷰 연결 => 알고리즘 고민하는곳
+        writerNickNameTxt.text = data.user.nickName
         contentTxt.text = data.content
 
         return row
