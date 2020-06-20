@@ -7,6 +7,7 @@ class TopicSide {
 
     //JSON => TopicSide 로 변환 가능
     companion object{
+
         fun getTopicSideFromJson(json : JSONObject) : TopicSide {
             val ts = TopicSide()
 
