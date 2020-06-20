@@ -1,6 +1,7 @@
 package dasdsa.sdn.apipractice_20200613
 
 import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -30,6 +31,14 @@ class ViewTopicDetailActivity : BaseActivity() {
     }
 
     override fun setupEvents() {
+
+        //의견 등록하기 버튼
+        replyBtn.setOnClickListener {
+
+            val myIntent = Intent(mContext, EditReplyActivity::class.java)
+            myIntent.putExtra("topicTitle", mTopic.title)
+            startActivity(myIntent)
+        }
 
         voteToFirstBtn.setOnClickListener {
             ServerUtil.postRequestVote(mContext, mTopic.sides[0].id, object : ServerUtil.JsonResponseHandler{
