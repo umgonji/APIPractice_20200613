@@ -101,7 +101,11 @@ class ReplyAdapter(
                     
                     data.likeCount = reply.getInt("like_count")
                     data.dislikeCount = reply.getInt("dislike_count")
-                    
+
+                    //색도 반영해주기
+                    data.isMyLike = reply.getBoolean("my_like")
+                    data.isMyDislike = reply.getBoolean("my_dislike")
+
                     //목록의 내용을 일부 변경 => 변경하려면
                     //어댑터.notifyDataSetChanged() 실행 필요함.
                     //이미 어댑터 내부에 있는 상황 => 곧바로 notifyDataSetChanged() 실행 가능
@@ -109,7 +113,7 @@ class ReplyAdapter(
                     //runOnUiThread로 처리 필요 => 어댑터내부에선 사용 불가.
                     // 대체재 : Handler(Looper.getMainLooper()).post (UI쓰레드 접근하는 다른 방법)
                     Handler(Looper.getMainLooper()).post {
-                        notifyDataSetChanged()
+                        notifyDataSetChanged()  //어뎁터를 다시 실행하는것
                     }
                 }
             })
@@ -127,6 +131,10 @@ class ReplyAdapter(
 
                     data.likeCount = likeCount
                     data.dislikeCount = dislikeCount
+
+                    //색도 반영해주기
+                    data.isMyLike = reply.getBoolean("my_like")
+                    data.isMyDislike = reply.getBoolean("my_dislike")
 
                     Handler(Looper.getMainLooper()).post {
                         notifyDataSetChanged()
