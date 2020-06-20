@@ -44,6 +44,7 @@
         android:layout_marginTop="20sp" />
 
     <EditText
+        android:id="@+id/contentEdt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="선택한 진영에 대한 논리를 말해주세요"
@@ -51,6 +52,7 @@
         android:gravity="top" />
 
     <Button
+        android:id="@+id/postReplyBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="의견 등록하기" />
