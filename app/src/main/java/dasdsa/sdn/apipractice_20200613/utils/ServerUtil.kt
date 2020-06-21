@@ -125,6 +125,37 @@ class ServerUtil {
 
         }
 
+        //원하는 의견의 상세정보 보기
+        fun getRequestReplyDetail(context: Context, replyId:Int, handler: JsonResponseHandler?) {
+
+            val client = OkHttpClient()
+
+            //4번의견? /topic_reply/4, 2번? /topic_reply/2
+            val urlBuilder = "${BASE_URL}/topic_reply/${replyId}".toHttpUrlOrNull()!!.newBuilder()
+            //   urlBuilder.addEncodedQueryParameter("type", checkType)
+            //   urlBuilder.addEncodedQueryParameter("value", inputVal)
+
+            val urlString = urlBuilder.build().toString()
+            Log.d("완성된 주소", urlString)
+
+            val request = Request.Builder()
+                .url(urlString)
+                .get()
+                .header("X-Http-Token", ContextUtil.getUserToken(context))
+                .build()
+
+            client.newCall(request).enqueue(object : Callback {
+                override fun onFailure(call: Call, e: IOException) {
+                }
+                override fun onResponse(call: Call, response: Response) {
+                    val bodyString = response.body!!.string()
+                    val json = JSONObject(bodyString)
+                    Log.d("JSON응답", json.toString())
+                    handler?.onResponse(json)
+                }
+            })
+
+        }
 
         fun getRequestV2MainInfo(context: Context, handler: JsonResponseHandler?) {
 

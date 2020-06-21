@@ -94,9 +94,9 @@ class ReplyAdapter(
         replyBtn.setOnClickListener {
 
             val myIntent = Intent(mContext, ViewReplyDetailActivity::class.java)
-            //myIntent.putExtra( "topic", data.id)
             //어뎁터에서 직접 startActivit 불가.
             //mContext의 도움을 받아서 startActivity 실행
+            myIntent.putExtra( "reply_id", data.id )
             mContext.startActivity(myIntent)
 
         }
