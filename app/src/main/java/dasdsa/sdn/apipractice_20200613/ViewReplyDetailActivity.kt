@@ -1,12 +1,14 @@
 package dasdsa.sdn.apipractice_20200613
 
 import android.content.Context
+import android.content.DialogInterface
 import android.hardware.input.InputManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import dasdsa.sdn.apipractice_20200613.adapters.ReReplyAdapter
 import dasdsa.sdn.apipractice_20200613.datas.TopicReply
 import dasdsa.sdn.apipractice_20200613.utils.ServerUtil
@@ -32,6 +34,46 @@ class ViewReplyDetailActivity : BaseActivity() {
     }
 
     override fun setupEvents() {
+
+        //답글 삭제 이벤트 (리스트뷰 아이템 롱클릭)
+
+        reReplyListView.setOnItemLongClickListener { parent, view, position, id ->
+
+            val clickedReReply = reReplyList[position]
+
+            // if (clickedReReply.userId == ) //지금은 내가 어떤 아이디인지 알수 있는곳이 없어서 이건 그냥 일단 패스 한다.
+            val alert = AlertDialog.Builder(mContext)
+            alert.setTitle("답글 ㅅ가제")
+            alert.setMessage("정말 답글을 삭제 하겠습니까?")
+            alert.setPositiveButton("확인", DialogInterface.OnClickListener { dialog, which ->
+
+                //서버에 답글 삭제 요청
+                ServerUtil.deleteRequestReply(mContext, clickedReReply.id, object : ServerUtil.JsonResponseHandler{
+                    override fun onResponse(json: JSONObject) {
+                        //서버의 메세지를 토스트로
+                        val message = json.getString("message")
+                        runOnUiThread {
+                            Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show()
+                        }
+
+                        //code : 200 => 삭제 성공
+                        val code = json.getInt("code")
+
+                        if( code == 200 ) {
+                            //실제 삭제 : 목록 변화 필요함 => 서버에서 다시 불러 오기 한다.
+                            getReplyDetailFromServer()
+                        }
+
+                    }
+                })
+
+            })
+            alert.setNegativeButton("취소", null)
+            alert.show()
+
+
+            return@setOnItemLongClickListener true
+        }
 
         postReReplyBtn.setOnClickListener {
             val content = reReplyContentEdt.text.toString()
