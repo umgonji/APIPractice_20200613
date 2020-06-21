@@ -1,6 +1,7 @@
 package dasdsa.sdn.apipractice_20200613.adapters
 
 import android.content.Context
+import android.content.Intent
 import android.media.JetPlayer
 import android.os.Handler
 import android.os.Looper
@@ -11,6 +12,7 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.TextView
 import dasdsa.sdn.apipractice_20200613.R
+import dasdsa.sdn.apipractice_20200613.ViewReplyDetailActivity
 import dasdsa.sdn.apipractice_20200613.datas.TopicReply
 import dasdsa.sdn.apipractice_20200613.utils.ServerUtil
 import org.json.JSONObject
@@ -88,6 +90,17 @@ class ReplyAdapter(
             dislikeBtn.setTextColor(mContext.resources.getColor(R.color.darkGray))
         }
 
+        //답글 버튼 눌림 처리
+        replyBtn.setOnClickListener {
+
+            val myIntent = Intent(mContext, ViewReplyDetailActivity::class.java)
+            //myIntent.putExtra( "topic", data.id)
+            //어뎁터에서 직접 startActivit 불가.
+            //mContext의 도움을 받아서 startActivity 실행
+            mContext.startActivity(myIntent)
+
+        }
+        
         //좋아요 / 싫어요 이벤트 처리
         likeBtn.setOnClickListener {
             //좋아요 API 호출 => 좋아요 누르기 / 취소 처리
