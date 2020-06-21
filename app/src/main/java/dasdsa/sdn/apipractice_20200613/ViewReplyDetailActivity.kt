@@ -2,9 +2,11 @@ package dasdsa.sdn.apipractice_20200613
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import dasdsa.sdn.apipractice_20200613.adapters.ReReplyAdapter
 import dasdsa.sdn.apipractice_20200613.datas.TopicReply
 import dasdsa.sdn.apipractice_20200613.utils.ServerUtil
 import kotlinx.android.synthetic.main.activity_view_reply_detail.*
+import kotlinx.android.synthetic.main.activity_view_topic_detail.*
 import org.json.JSONObject
 
 class ViewReplyDetailActivity : BaseActivity() {
@@ -12,6 +14,10 @@ class ViewReplyDetailActivity : BaseActivity() {
     //intent로 받아주는건 왠만하면 멤버 변수로 만들자.  그리고 setValues() 서 값 넣어주기.
     var mReplyId = -1
     lateinit var  mReply : TopicReply
+
+    //답글 목록을 담고있게 될 배열
+    val reReplyList = ArrayList<TopicReply>()
+    lateinit var mReReplyAdapter : ReReplyAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,6 +34,9 @@ class ViewReplyDetailActivity : BaseActivity() {
 
         mReplyId = intent.getIntExtra("reply_id", -1)
 
+        mReReplyAdapter = ReReplyAdapter(mContext, R.layout.topic_re_reply_list_item, reReplyList)
+        reReplyListView.adapter = mReReplyAdapter
+
         //서버에서 의견 상세 현황 가져오기
         getReplyDetailFromServer()
     }
@@ -40,10 +49,22 @@ class ViewReplyDetailActivity : BaseActivity() {
                 val reply = data.getJSONObject("reply")
                 mReply = TopicReply.getTopicReplyFromJson(reply)
 
+                //화면에 뿌려질 답글 목록도 담아주자
+                val reReplies = reply.getJSONObject("replies")
+
+                for (i in 0..reReplies.length()-1) {
+                    //JSONArray내부의 객체를 => TopicReply로 변환 => reReplyList에 추가
+                    reReplyList.add(TopicReply.getTopicReplyFromJson(reReplies.getJSONObject(i.toString())))
+                }
+
                 runOnUiThread {
                     sideTitleTxt.text = mReply.selectedSide.title
                     writerNickNameTxt.text = mReply.user.nickName
                     contentTxt.text = mReply.content
+
+                    //notifydataSetchage  필요함
+                    //서버에서 받아온 대댓글을 리스트뷰에 반영
+                    mReReplyAdapter.notifyDataSetChanged()
                 }
             }
 
