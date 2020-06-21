@@ -298,6 +298,37 @@ class ServerUtil {
             })
         }
 
+        //의견에 대한 답글 남기기
+        fun postRequestReReply(context: Context, parentReplyId: Int, content: String, handler: JsonResponseHandler?) {
+
+            val client = OkHttpClient()
+
+            val urlString = "${BASE_URL}/topic_reply"
+
+            val formData = FormBody.Builder()
+                .add("parent_reply_id", parentReplyId.toString())
+                .add("content", content.toString())
+                .build()
+
+            val request = Request.Builder()
+                .url(urlString)
+                .post(formData)
+                .header("X-Http-Token", ContextUtil.getUserToken(context))
+                .build()
+
+            client.newCall(request).enqueue(object : Callback {
+                override fun onFailure(call: Call, e: IOException) {
+                }
+                override fun onResponse(call: Call, response: Response) {
+
+                    val bodyString = response.body!!.string()
+                    val json = JSONObject(bodyString)
+                    Log.d("JSON응답", json.toString())
+                    handler?.onResponse(json)
+                }
+            })
+        }
+
         fun postRequestReplyLikeOrDislike(context: Context, replyId:Int, isLike:Boolean, handler: JsonResponseHandler?) {
 
             val client = OkHttpClient()
