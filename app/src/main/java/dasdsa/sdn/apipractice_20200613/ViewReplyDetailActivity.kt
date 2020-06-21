@@ -1,8 +1,11 @@
 package dasdsa.sdn.apipractice_20200613
 
+import android.content.Context
+import android.hardware.input.InputManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import dasdsa.sdn.apipractice_20200613.adapters.ReReplyAdapter
 import dasdsa.sdn.apipractice_20200613.datas.TopicReply
@@ -41,6 +44,11 @@ class ViewReplyDetailActivity : BaseActivity() {
 
                     //서버에서 다시 의견에 대한 상세 현황 가져오기
                     getReplyDetailFromServer()
+
+                    //답글 등록시 성공 관련 ui 처리.
+                    runOnUiThread {
+                        reReplyContentEdt.setText("")
+                    }
                 }
             })
         }
@@ -88,6 +96,15 @@ class ViewReplyDetailActivity : BaseActivity() {
                     //notifydataSetchage  필요함
                     //서버에서 받아온 대댓글을 리스트뷰에 반영 => 리스트뷰의 내용 변경 감지 새로고침
                     mReReplyAdapter.notifyDataSetChanged()
+
+                    //내가 단 답글을 보기 편하도록 스크롤 처리
+                    //답글 10개 => 목록(ArrayList)은 0~9 번까지.
+                    //10개답글 => 9번을 보러 가는게 마지막으로 이동하는 행위임
+                    reReplyListView.smoothScrollToPosition(reReplyList.size - 1)
+                    //키보드도 내려보자.
+                    val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.hideSoftInputFromWindow(reReplyContentEdt.windowToken, 0)
+
                 }
             }
 
