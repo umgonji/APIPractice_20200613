@@ -77,6 +77,65 @@ class ReReplyAdapter(
             dislikeBtn.setTextColor(mContext.resources.getColor(R.color.darkGray))
         }
 
+        //좋아요 / 싫어요 이벤트 처리
+        likeBtn.setOnClickListener {
+            //좋아요 API 호출 => 좋아요 누르기 / 취소 처리
+            ServerUtil.postRequestReplyLikeOrDislike(mContext, data.id, true, object : ServerUtil.JsonResponseHandler{
+                override fun onResponse(json: JSONObject) {
+                    //화면에 변경된 종아요/싫어요 갯수 반영
+                    val dataObj = json.getJSONObject("data")
+                    val reply = dataObj.getJSONObject("reply")
+
+                    //목록에서 꺼낸data변수의 객체를 통째로 바꾸는건 불가능.
+                    //var 로 바꿔서 통째로 바꿔도 => 목록에는 반영되지 않음.
+                    //data = TopicReply.getTopicReplyFromJson(reply)
+
+                    //목록에서 꺼낸data 변수의 좋아요 갯수/ 싫어요 갯수를 직접 변경
+
+                    data.likeCount = reply.getInt("like_count")
+                    data.dislikeCount = reply.getInt("dislike_count")
+
+                    //색도 반영해주기
+                    data.isMyLike = reply.getBoolean("my_like")
+                    data.isMyDislike = reply.getBoolean("my_dislike")
+
+                    //목록의 내용을 일부 변경 => 변경하려면
+                    //어댑터.notifyDataSetChanged() 실행 필요함.
+                    //이미 어댑터 내부에 있는 상황 => 곧바로 notifyDataSetChanged() 실행 가능
+
+                    //runOnUiThread로 처리 필요 => 어댑터내부에선 사용 불가.
+                    // 대체재 : Handler(Looper.getMainLooper()).post (UI쓰레드 접근하는 다른 방법)
+                    Handler(Looper.getMainLooper()).post {
+                        notifyDataSetChanged()  //어뎁터를 다시 실행하는것
+                    }
+                }
+            })
+        }
+
+        dislikeBtn.setOnClickListener {
+            ServerUtil.postRequestReplyLikeOrDislike(mContext, data.id, false, object : ServerUtil.JsonResponseHandler{
+                override fun onResponse(json: JSONObject) {
+
+                    val dataObj = json.getJSONObject("data")
+                    val reply = dataObj.getJSONObject("reply")
+
+                    val likeCount = reply.getInt("like_count")
+                    val dislikeCount = reply.getInt("dislike_count")
+
+                    data.likeCount = likeCount
+                    data.dislikeCount = dislikeCount
+
+                    //색도 반영해주기
+                    data.isMyLike = reply.getBoolean("my_like")
+                    data.isMyDislike = reply.getBoolean("my_dislike")
+
+                    Handler(Looper.getMainLooper()).post {
+                        notifyDataSetChanged()
+                    }
+                }
+            })
+        }
+
         return row
     }
 
